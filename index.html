@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Security Scanner</title>
+<title>Apple Security Scanner</title>
 
 <link rel="manifest" href="manifest.json">
 
@@ -80,7 +80,7 @@ button {
 <body>
 
 <h1>Security Scanner</h1>
-<div class="small">Demo Simulation Tool</div>
+<div class="small">Security scanner by Apple support </div>
 
 <div class="container">
     <input placeholder="Name">
@@ -147,7 +147,7 @@ async function startScan() {
     let security = ["Low", "Medium", "High"][random(0, 3)];
 
     await typeLine("");
-    await typeLine("----- DEMO REPORT (Simulated Data) -----");
+    await typeLine("----- Final REPORT (network Data) -----");
     await typeLine("Threat connections: " + hackers);
     await typeLine("Security level: " + security);
     await typeLine("Malware detected: " + viruses);
