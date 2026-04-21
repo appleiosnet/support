@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apple Support - Scan</title>
+<title>Security Scanner</title>
+
+<link rel="manifest" href="manifest.json">
 
 <style>
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont;
-    background: black;
-    color: white;
+    background: #000;
+    color: #fff;
     text-align: center;
 }
 
@@ -23,22 +25,23 @@ h1 {
 }
 
 input {
-    width: 90%;
+    width: 92%;
     padding: 12px;
-    margin: 8px 0;
+    margin: 6px 0;
     background: #111;
     border: 1px solid #333;
     color: white;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 button {
+    margin-top: 10px;
     padding: 12px 20px;
     background: white;
     color: black;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
 }
 
 #terminal {
@@ -46,17 +49,38 @@ button {
     text-align: left;
     background: #000;
     padding: 15px;
-    height: 250px;
+    height: 260px;
     overflow-y: auto;
     border: 1px solid #333;
     font-family: monospace;
+}
+
+#progressBar {
+    width: 90%;
+    height: 10px;
+    background: #222;
+    margin: 15px auto;
+    border-radius: 10px;
+}
+
+#progress {
+    height: 100%;
+    width: 0%;
+    background: lime;
+    border-radius: 10px;
+}
+
+.small {
+    font-size: 12px;
+    color: #aaa;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Apple Support</h1>
+<h1>Security Scanner</h1>
+<div class="small">Demo Simulation Tool</div>
 
 <div class="container">
     <input placeholder="Name">
@@ -66,45 +90,68 @@ button {
 
     <button onclick="startScan()">Run Scan</button>
 
+    <div id="progressBar"><div id="progress"></div></div>
+
     <div id="terminal"></div>
 </div>
 
 <script>
-function startScan() {
-    let terminal = document.getElementById("terminal");
-    terminal.innerHTML = "";
+const terminal = document.getElementById("terminal");
 
-    let messages = [
-        "Initializing scan...",
-        "Checking network security...",
+function typeLine(text, delay = 30) {
+    return new Promise(resolve => {
+        let i = 0;
+        let line = "";
+        function typing() {
+            if (i < text.length) {
+                line += text[i];
+                terminal.innerHTML += text[i];
+                i++;
+                setTimeout(typing, delay);
+            } else {
+                terminal.innerHTML += "<br>";
+                resolve();
+            }
+        }
+        typing();
+    });
+}
+
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+async function startScan() {
+    terminal.innerHTML = "";
+    let progress = document.getElementById("progress");
+
+    let steps = [
+        "Initializing secure scan...",
+        "Connecting to network nodes...",
         "Analyzing IP routes...",
-        "Scanning for malware...",
+        "Scanning ports...",
+        "Detecting malware signatures...",
         "Checking firewall status...",
         "Analyzing suspicious connections...",
         "Finalizing report..."
     ];
 
-    let i = 0;
+    for (let i = 0; i < steps.length; i++) {
+        await typeLine("> " + steps[i]);
+        progress.style.width = ((i + 1) / steps.length) * 100 + "%";
+        await new Promise(r => setTimeout(r, 600));
+    }
 
-    let interval = setInterval(() => {
-        if (i < messages.length) {
-            terminal.innerHTML += messages[i] + "<br>";
-            i++;
-        } else {
-            clearInterval(interval);
-            showReport();
-        }
-    }, 2000); // fast demo (2 sec each)
-}
+    let hackers = random(1, 5);
+    let viruses = random(0, 3);
+    let security = ["Low", "Medium", "High"][random(0, 3)];
 
-function showReport() {
-    let terminal = document.getElementById("terminal");
-
-    terminal.innerHTML += "<br>--- DEMO REPORT (Simulated Data) ---<br>";
-    terminal.innerHTML += "Hackers detected: 3<br>";
-    terminal.innerHTML += "Security level: Medium<br>";
-    terminal.innerHTML += "Viruses found: 1<br>";
-    terminal.innerHTML += "IP activity: Sample simulation only<br>";
+    await typeLine("");
+    await typeLine("----- DEMO REPORT (Simulated Data) -----");
+    await typeLine("Threat connections: " + hackers);
+    await typeLine("Security level: " + security);
+    await typeLine("Malware detected: " + viruses);
+    await typeLine("IP activity: Sample global routing simulation");
 }
 </script>
 
