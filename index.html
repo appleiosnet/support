@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apple Support - Scan</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+.container {
+    padding: 20px;
+}
+
+input {
+    width: 90%;
+    padding: 12px;
+    margin: 8px 0;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+}
+
+button {
+    padding: 12px 20px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#terminal {
+    margin-top: 20px;
+    text-align: left;
+    background: #000;
+    padding: 15px;
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #333;
+    font-family: monospace;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Apple Support</h1>
+
+<div class="container">
+    <input placeholder="Name">
+    <input placeholder="Email">
+    <input placeholder="Phone">
+    <input placeholder="IP Address">
+
+    <button onclick="startScan()">Run Scan</button>
+
+    <div id="terminal"></div>
+</div>
+
+<script>
+function startScan() {
+    let terminal = document.getElementById("terminal");
+    terminal.innerHTML = "";
+
+    let messages = [
+        "Initializing scan...",
+        "Checking network security...",
+        "Analyzing IP routes...",
+        "Scanning for malware...",
+        "Checking firewall status...",
+        "Analyzing suspicious connections...",
+        "Finalizing report..."
+    ];
+
+    let i = 0;
+
+    let interval = setInterval(() => {
+        if (i < messages.length) {
+            terminal.innerHTML += messages[i] + "<br>";
+            i++;
+        } else {
+            clearInterval(interval);
+            showReport();
+        }
+    }, 2000); // fast demo (2 sec each)
+}
+
+function showReport() {
+    let terminal = document.getElementById("terminal");
+
+    terminal.innerHTML += "<br>--- DEMO REPORT (Simulated Data) ---<br>";
+    terminal.innerHTML += "Hackers detected: 3<br>";
+    terminal.innerHTML += "Security level: Medium<br>";
+    terminal.innerHTML += "Viruses found: 1<br>";
+    terminal.innerHTML += "IP activity: Sample simulation only<br>";
+}
+</script>
+
+</body>
+</html>
